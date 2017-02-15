@@ -1,0 +1,6 @@
+*.class
+
+# Eclipse stuff
+/bin/
+.settings/
+
