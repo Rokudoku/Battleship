@@ -7,9 +7,9 @@ public class Ship {
 	public final static int RIGHT = 1;
 	public final static int DOWN = 2;
 	
-	private static int xOrigin;
-	private static int yOrigin;
-	private static int size;
+	private final int xOrigin;
+	private final int yOrigin;
+	private final int size;
 
 	public Ship(int xOrigin, int yOrigin, int size) {
 		this.xOrigin = xOrigin;
