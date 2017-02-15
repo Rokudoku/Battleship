@@ -4,6 +4,10 @@
  */
 public class BoardEnemy extends Board{
 
+	public BoardEnemy() {
+		super();
+	}
+	
 	public void printBoard() {
 		System.out.println("  | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10|");
 		System.out.println("  -----------------------------------------");
@@ -19,9 +23,5 @@ public class BoardEnemy extends Board{
 			}
 			System.out.println("");
 		}
-	}
-	
-	public BoardEnemy() {
-		super();
 	}
 }
