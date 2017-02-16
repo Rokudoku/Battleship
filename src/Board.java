@@ -50,6 +50,11 @@ public class Board {
 	}
 	
 	public boolean isValidTile(int row, int column) {
+		// return false if it is already full
+		if (board[row][column] == SHIP) {
+			return false;
+		}
+		// otherwise return true if it is within the bounds
 		return row >= 0 && row < BOARD_HEIGHT 
 				&& column >= 0 && column < BOARD_WIDTH;
 	}
