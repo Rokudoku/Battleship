@@ -20,21 +20,24 @@
 import java.util.Arrays;
 
 public class Board {
-	public final static boolean EMPTY = false;
-	public final static boolean SHIP  = true;
-	
 	public final static int BOARD_HEIGHT = 10;
 	public final static int BOARD_WIDTH = 10;
 	
+	public final static boolean EMPTY = false;
+	public final static boolean SHIP  = true;
+	
+	// board is protected so it can be a part of the subclasses
 	protected boolean[][] board = new boolean[BOARD_HEIGHT][BOARD_WIDTH];
 	
 	public Board() {
+		// initialize entire board with EMPTY
 		for (int row = 0; row < BOARD_HEIGHT; row++) {
 			Arrays.fill(board[row], EMPTY);
 		}
 	}
 	
 	public String getRowLetter(int rowNumber) {
+		// used for printing out side of the board
 		String rowLetters[] = { "A", "B", "C", "D", "E",
 								"F", "G", "H", "I", "J" };
 		return rowLetters[rowNumber];
