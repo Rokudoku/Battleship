@@ -21,19 +21,18 @@ import java.util.Arrays;
 
 public class Board {
 	public final static int BOARD_HEIGHT = 10;
-	public final static int BOARD_WIDTH = 10;
-	
-	public final static boolean EMPTY = false;
-	public final static boolean SHIP  = true;
+	public final static int BOARD_WIDTH  = 10;
+
+	// tile states
+	public final static int EMPTY       = 0;
+	public final static int PATROL_BOAT = 1;	// 2 tiles
+	public final static int SUBMARINE   = 2;	// 3 tiles
+	public final static int DESTROYER   = 3;	// 3 tiles
+	public final static int BATTLESHIP  = 4;	// 4 tiles
+	public final static int CARRIER     = 5;	// 2 tiles
 	
 	// protected so they can be a part of the subclasses
-	protected boolean[][] board = new boolean[BOARD_HEIGHT][BOARD_WIDTH];
-	// names of ships are based on their size (positions chosen in subclasses)
-	protected Ship shipFive;
-	protected Ship shipFour;
-	protected Ship shipThreeOne;
-	protected Ship shipThreeTwo;
-	protected Ship shipTwo;
+	protected int[][] board = new int[BOARD_HEIGHT][BOARD_WIDTH];	
 	
 	public Board() {
 		// initialize entire board with EMPTY
@@ -51,7 +50,7 @@ public class Board {
 	
 	public boolean isValidTile(int row, int column) {
 		// return false if it is already full
-		if (board[row][column] == SHIP) {
+		if (board[row][column] != EMPTY) {
 			return false;
 		}
 		// otherwise return true if it is within the bounds
