@@ -28,4 +28,8 @@ public class BoardEnemy extends Board{
 			System.out.println("");
 		}
 	}
+	
+	public void testHP() {
+		System.out.println("HP: " + getHitPoints(DESTROYER));
+	}
 }

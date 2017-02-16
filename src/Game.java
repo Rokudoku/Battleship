@@ -6,5 +6,8 @@ public class Game {
 	public static void main(String[] args) {
 		BoardEnemy boardComputer = new BoardEnemy();
 		boardComputer.printBoard();
+		boardComputer.testHP();
+		boardComputer.reduceHitPoints(Board.DESTROYER);
+		boardComputer.testHP();
 	}
 }

@@ -32,7 +32,13 @@ public class Board {
 	public final static int CARRIER     = 5;	// 2 tiles
 	
 	// protected so they can be a part of the subclasses
-	protected int[][] board = new int[BOARD_HEIGHT][BOARD_WIDTH];	
+	protected int[][] board = new int[BOARD_HEIGHT][BOARD_WIDTH];
+	
+	private int patrolBoatHP = 2;
+	private int submarineHP  = 3;
+	private int destroyerHP  = 3;
+	private int battleshipHP = 4;
+	private int carrierHP    = 5;
 	
 	public Board() {
 		// initialize entire board with EMPTY
@@ -56,5 +62,46 @@ public class Board {
 		// otherwise return true if it is within the bounds
 		return row >= 0 && row < BOARD_HEIGHT 
 				&& column >= 0 && column < BOARD_WIDTH;
+	}
+	
+	public int getHitPoints(int ship) {
+		switch(ship) {
+		case PATROL_BOAT:
+			return patrolBoatHP;
+		case SUBMARINE:
+			return submarineHP;
+		case DESTROYER:
+			return destroyerHP;
+		case BATTLESHIP:
+			return battleshipHP;
+		case CARRIER:
+			return carrierHP;
+		default:
+			System.out.println("getHitPoints received invalid ship");
+			return 0;
+		}
+	}
+	
+	public void reduceHitPoints(int ship) {
+		switch(ship) {
+		case PATROL_BOAT:
+			patrolBoatHP -= 1;
+			break;
+		case SUBMARINE:
+			submarineHP -= 1;
+			break;
+		case DESTROYER:
+			destroyerHP -= 1;
+			break;
+		case BATTLESHIP:
+			battleshipHP -= 1;
+			break;
+		case CARRIER:
+			carrierHP -= 1;
+			break;
+		default:
+			System.out.println("reduceHitPoints received invalid ship");
+			break;
+		}
 	}
 }
