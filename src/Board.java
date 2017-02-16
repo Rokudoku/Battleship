@@ -4,7 +4,7 @@
  * 
  * General appearance of the board: 
  *   | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10|   
- *    *   -----------------------------------------
+ *   -----------------------------------------
  * A | - | - | - | - | - | - | X | - | - | - |
  * B | X | X | X | X | - | - | X | - | - | - |
  * C | - | - | - | - | - | - | X | - | X | X |
@@ -26,8 +26,14 @@ public class Board {
 	public final static boolean EMPTY = false;
 	public final static boolean SHIP  = true;
 	
-	// board is protected so it can be a part of the subclasses
+	// protected so they can be a part of the subclasses
 	protected boolean[][] board = new boolean[BOARD_HEIGHT][BOARD_WIDTH];
+	// names of ships are based on their size (positions chosen in subclasses)
+	protected Ship shipFive;
+	protected Ship shipFour;
+	protected Ship shipThreeOne;
+	protected Ship shipThreeTwo;
+	protected Ship shipTwo;
 	
 	public Board() {
 		// initialize entire board with EMPTY
