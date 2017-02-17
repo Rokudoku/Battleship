@@ -3,15 +3,52 @@
  * Randomly generates ship positions.
  */
 public class BoardEnemy extends Board{
-	// having only these directions help simplify finding a spot
+	// having only these directions help simplify finding a random spot
 	public final static int RIGHT = 0;
 	public final static int DOWN = 1;
 	public final static int NUM_DIRECTIONS = 2;
 	
 	public BoardEnemy() {
 		super();
+		setCarrier();
 	}
 	
+	private void setCarrier() {
+		int size = 5;
+		int direction = (int) (Math.random() * NUM_DIRECTIONS);
+		int row = setRandomRow(direction, size);
+		System.out.println("row is: " + row);
+		int column = setRandomColumn(direction, size);
+		System.out.println("column is: " + column);
+		if (direction == RIGHT) {
+			for (int i = 0; i < size; i++) {
+				board[row][column+i] = CARRIER;
+			}
+		} else {
+			for (int i = 0; i < size; i++) {
+				board[row+i][column] = CARRIER;
+			}
+		}
+	}
+	
+	private static int setRandomRow(int direction, int size) {
+		// eliminates option of selecting a row where ship would go off board
+		System.out.println("BOARD_HEIGHT is:" + BOARD_HEIGHT);
+		if (direction == RIGHT) {
+			return (int) (Math.random() * BOARD_HEIGHT);
+		} else {
+			return (int) (Math.random() * (BOARD_WIDTH - size + 1));
+		}
+	}
+	
+	private static int setRandomColumn(int direction, int size) {
+		// eliminates option of selecting a column where ship would go off board
+		if (direction == RIGHT) {
+			return (int) (Math.random() * (BOARD_HEIGHT - size + 1));
+		} else {
+			return (int) (Math.random() * BOARD_WIDTH);
+		}
+	}
 	public void printBoard() {
 		System.out.println("  | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10|");
 		System.out.println("  -----------------------------------------");
@@ -22,7 +59,7 @@ public class BoardEnemy extends Board{
 				if (board[row][column] == EMPTY) {
 					System.out.print(" -  ");
 				} else {
-					System.out.print("| X ");
+					System.out.print(" X  ");
 				}
 			}
 			System.out.println("");
