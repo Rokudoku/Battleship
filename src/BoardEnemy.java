@@ -3,10 +3,6 @@
  * Randomly generates ship positions.
  */
 public class BoardEnemy extends Board{
-	// having only these directions help simplify finding a random spot
-	public final static int RIGHT = 0;
-	public final static int DOWN = 1;
-	public final static int NUM_DIRECTIONS = 2;
 	
 	public BoardEnemy() {
 		super();

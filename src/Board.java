@@ -31,6 +31,11 @@ public class Board {
 	public final static int BATTLESHIP  = 4;	// 4 tiles
 	public final static int CARRIER     = 5;	// 2 tiles
 	
+	// having only these directions help simplify finding a random spot
+	public final static int RIGHT = 0;
+	public final static int DOWN = 1;
+	public final static int NUM_DIRECTIONS = 2;
+	
 	// protected so they can be a part of the subclasses
 	protected int[][] board = new int[BOARD_HEIGHT][BOARD_WIDTH];
 	
@@ -62,6 +67,37 @@ public class Board {
 		// otherwise return true if it is within the bounds
 		return row >= 0 && row < BOARD_HEIGHT 
 				&& column >= 0 && column < BOARD_WIDTH;
+	}
+	
+	// check if ship can be placed
+	public boolean isValidPlacement(int rowStart, int columnStart,
+									int direction, int size) {
+		if (direction == RIGHT) {
+			for (int i = 0; i < size; i++) {
+				if (!isValidTile(rowStart, columnStart+i)) {
+					return false;
+				}
+			}
+		}
+		return true;
+	}
+	
+	public int getShipSize(int ship) {
+		switch(ship) {
+		case PATROL_BOAT:
+			return 2;
+		case SUBMARINE:
+			return 3;
+		case DESTROYER:
+			return 3;
+		case BATTLESHIP:
+			return 4;
+		case CARRIER:
+			return 5;
+		default:
+			System.out.println("getShipSize received invalid ship");
+			return 0;
+		}
 	}
 	
 	public int getHitPoints(int ship) {
