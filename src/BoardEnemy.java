@@ -10,16 +10,14 @@ public class BoardEnemy extends Board{
 	
 	public BoardEnemy() {
 		super();
-		setCarrier();
+		setRandomPlacement(CARRIER);
 	}
 	
 	private void setCarrier() {
 		int size = 5;
 		int direction = (int) (Math.random() * NUM_DIRECTIONS);
 		int row = setRandomRow(direction, size);
-		System.out.println("row is: " + row);
 		int column = setRandomColumn(direction, size);
-		System.out.println("column is: " + column);
 		if (direction == RIGHT) {
 			for (int i = 0; i < size; i++) {
 				board[row][column+i] = CARRIER;
@@ -31,9 +29,24 @@ public class BoardEnemy extends Board{
 		}
 	}
 	
+	private void setRandomPlacement(int ship) {
+		int size = getShipSize(ship);
+		int direction = (int) (Math.random() * NUM_DIRECTIONS);
+		int row = setRandomRow(direction, size);
+		int column = setRandomColumn(direction, size);
+		if (direction == RIGHT) {
+			for (int i = 0; i < size; i++) {
+				board[row][column+i] = ship;
+			}
+		} else {
+			for (int i = 0; i < size; i++) {
+				board[row+i][column] = ship;
+			}
+		}
+	}
+	
 	private static int setRandomRow(int direction, int size) {
 		// eliminates option of selecting a row where ship would go off board
-		System.out.println("BOARD_HEIGHT is:" + BOARD_HEIGHT);
 		if (direction == RIGHT) {
 			return (int) (Math.random() * BOARD_HEIGHT);
 		} else {
@@ -49,6 +62,7 @@ public class BoardEnemy extends Board{
 			return (int) (Math.random() * BOARD_WIDTH);
 		}
 	}
+	
 	public void printBoard() {
 		System.out.println("  | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10|");
 		System.out.println("  -----------------------------------------");
