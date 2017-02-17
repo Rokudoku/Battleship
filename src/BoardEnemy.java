@@ -13,22 +13,6 @@ public class BoardEnemy extends Board{
 		setRandomPlacement(PATROL_BOAT);
 	}
 	
-	private void setCarrier() {
-		int size = 5;
-		int direction = (int) (Math.random() * NUM_DIRECTIONS);
-		int row = setRandomRow(direction, size);
-		int column = setRandomColumn(direction, size);
-		if (direction == RIGHT) {
-			for (int i = 0; i < size; i++) {
-				board[row][column+i] = CARRIER;
-			}
-		} else {
-			for (int i = 0; i < size; i++) {
-				board[row+i][column] = CARRIER;
-			}
-		}
-	}
-	
 	private void setRandomPlacement(int ship) {
 		int size = getShipSize(ship);
 		int direction = (int) (Math.random() * NUM_DIRECTIONS);
@@ -78,10 +62,28 @@ public class BoardEnemy extends Board{
 		for (int row = 0; row < BOARD_HEIGHT; row++) {
 			System.out.print(this.getRowLetter(row) + " |");
 			for (int column = 0; column < BOARD_WIDTH; column++) {
-				if (board[row][column] == EMPTY) {
+				switch(board[row][column]) {
+				case EMPTY:
 					System.out.print(" -  ");
-				} else {
-					System.out.print(" X  ");
+					break;
+				case PATROL_BOAT:
+					System.out.print(" P  ");
+					break;
+				case SUBMARINE:
+					System.out.print(" S  ");
+					break;
+				case DESTROYER:
+					System.out.print(" D  ");
+					break;
+				case BATTLESHIP:
+					System.out.print(" B  ");
+					break;
+				case CARRIER:
+					System.out.print(" C  ");
+					break;
+				default:
+					System.out.print(" ?  ");
+					break;
 				}
 			}
 			System.out.println("");
