@@ -78,6 +78,12 @@ public class Board {
 					return false;
 				}
 			}
+		} else {
+			for (int i = 0; i < size; i++) {
+				if (!isValidTile(rowStart+i, columnStart)) {
+					return false;
+				}
+			}
 		}
 		return true;
 	}

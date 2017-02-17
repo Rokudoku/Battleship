@@ -7,6 +7,10 @@ public class BoardEnemy extends Board{
 	public BoardEnemy() {
 		super();
 		setRandomPlacement(CARRIER);
+		setRandomPlacement(BATTLESHIP);
+		setRandomPlacement(DESTROYER);
+		setRandomPlacement(SUBMARINE);
+		setRandomPlacement(PATROL_BOAT);
 	}
 	
 	private void setCarrier() {
@@ -28,8 +32,16 @@ public class BoardEnemy extends Board{
 	private void setRandomPlacement(int ship) {
 		int size = getShipSize(ship);
 		int direction = (int) (Math.random() * NUM_DIRECTIONS);
-		int row = setRandomRow(direction, size);
-		int column = setRandomColumn(direction, size);
+		int row;
+		int column;
+		
+		// look for a valid placement
+		do {
+			row = setRandomRow(direction, size);
+			column = setRandomColumn(direction, size);
+		} while (!isValidPlacement(row, column, direction, size));
+		
+		// place ships onto board
 		if (direction == RIGHT) {
 			for (int i = 0; i < size; i++) {
 				board[row][column+i] = ship;
