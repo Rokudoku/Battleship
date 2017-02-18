@@ -20,18 +20,22 @@ public class Board {
 	public final static int CARRIER     = 5;	// 2 tiles
 	
 	// tile states for radar
-	public final static int UNKNOWN			= 0;	// no shot fired yet
+	public final static int MISS			= 0;	
 	public final static int HIT_PATROL_BOAT = 1;	
 	public final static int HIT_SUBMARINE   = 2;
 	public final static int HIT_DESTROYER   = 3;
 	public final static int HIT_BATTLESHIP  = 4;
 	public final static int HIT_CARRIER     = 5;
-	public final static int MISS			= 6;
+	public final static int UNKNOWN			= 6;	// no shot fired yet
 	
 	// having only these directions help simplify finding a random spot
 	public final static int RIGHT = 0;
 	public final static int DOWN  = 1;
 	public final static int NUM_DIRECTIONS = 2;
+	
+	// input error message
+	public final static String INPUT_ERROR_MESSAGE = "Coordinate must "
+			+ "contain: A-J followed by 1-10 (e.g. E3)";
 	
 	// protected so they can be a part of the subclasses
 	protected int[][] board = new int[BOARD_HEIGHT][BOARD_WIDTH];
@@ -87,6 +91,19 @@ public class Board {
 		return true;
 	}
 	
+	// returns the tile state
+	// ** NOTE THAT 0-5 OF TILE STATE LINE UP WITH 0-5 OF RADAR STATE **
+	// e.g. EMPTY == MISS, CARRIER == HIT_CARRIER
+	// exception is 6, UNKNOWN which only exists in the radar
+	public int getTile(int row, int column) {
+		if (isValidTile(row, column)) {
+			return board[row][column];
+		} else {
+			System.out.println("Attempted to get tile state of invalid tile");
+			return 0;
+		}
+	}
+	
 	public int getShipSize(int ship) {
 		switch(ship) {
 		case PATROL_BOAT:
@@ -119,7 +136,7 @@ public class Board {
 			return carrierHP;
 		default:
 			System.out.println("getHitPoints received invalid ship");
-			return 0;
+			return EMPTY;
 		}
 	}
 	
