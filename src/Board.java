@@ -2,20 +2,8 @@
  * The game board.
  * A superclass for BoardEnemy and BoardPlayer.
  * 
- * General appearance of the board: 
- *   | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10|   
- *   -----------------------------------------
- * A | - | - | - | - | - | - | X | - | - | - |
- * B | X | X | X | X | - | - | X | - | - | - |
- * C | - | - | - | - | - | - | X | - | X | X |
- * ...
- * OR
- *   | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10|   
- *   -----------------------------------------
- * A | -   -   -   -   -   -   X   -   -   -  
- * B | X   X   X   X   -   -   X   -   -   -  
- * C | -   -   -   -   -   -   X   -   X   X  
- * ...
+ * Boards also contain a radar which shows the HIT/MISS state of the board.
+ * The player's radar is connected to the enemy board and vice-versa.
  */
 import java.util.Arrays;
 
@@ -31,13 +19,23 @@ public class Board {
 	public final static int BATTLESHIP  = 4;	// 4 tiles
 	public final static int CARRIER     = 5;	// 2 tiles
 	
+	// tile states for radar
+	public final static int UNKNOWN			= 0;	// no shot fired yet
+	public final static int HIT_PATROL_BOAT = 1;	
+	public final static int HIT_SUBMARINE   = 2;
+	public final static int HIT_DESTROYER   = 3;
+	public final static int HIT_BATTLESHIP  = 4;
+	public final static int HIT_CARRIER     = 5;
+	public final static int MISS			= 6;
+	
 	// having only these directions help simplify finding a random spot
 	public final static int RIGHT = 0;
-	public final static int DOWN = 1;
+	public final static int DOWN  = 1;
 	public final static int NUM_DIRECTIONS = 2;
 	
 	// protected so they can be a part of the subclasses
 	protected int[][] board = new int[BOARD_HEIGHT][BOARD_WIDTH];
+	protected int[][] radar = new int[BOARD_HEIGHT][BOARD_WIDTH];
 	
 	private int patrolBoatHP = 2;
 	private int submarineHP  = 3;
@@ -46,9 +44,10 @@ public class Board {
 	private int carrierHP    = 5;
 	
 	public Board() {
-		// initialize entire board with EMPTY
+		// initialize entire board with EMPTY and radar with UNKNOWN
 		for (int row = 0; row < BOARD_HEIGHT; row++) {
 			Arrays.fill(board[row], EMPTY);
+			Arrays.fill(radar[row], UNKNOWN);
 		}
 	}
 	
@@ -144,6 +143,44 @@ public class Board {
 		default:
 			System.out.println("reduceHitPoints received invalid ship");
 			break;
+		}
+	}
+	
+	public void printRadar() {
+		System.out.println("  | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10|");
+		System.out.println("  -----------------------------------------");
+		
+		for (int row = 0; row < BOARD_HEIGHT; row++) {
+			System.out.print(this.getRowLetter(row) + " |");
+			for (int column = 0; column < BOARD_WIDTH; column++) {
+				switch(radar[row][column]) {
+				case UNKNOWN:
+					System.out.print(" -  ");
+					break;
+				case HIT_PATROL_BOAT:
+					System.out.print(" P  ");
+					break;
+				case HIT_SUBMARINE:
+					System.out.print(" S  ");
+					break;
+				case HIT_DESTROYER:
+					System.out.print(" D  ");
+					break;
+				case HIT_BATTLESHIP:
+					System.out.print(" B  ");
+					break;
+				case HIT_CARRIER:
+					System.out.print(" C  ");
+					break;
+				case MISS:
+					System.out.print(" X  ");
+					break;
+				default:
+					System.out.print(" ?  ");
+					break;
+				}
+			}
+			System.out.println("");
 		}
 	}
 }

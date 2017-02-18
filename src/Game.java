@@ -8,6 +8,7 @@ public class Game {
 		boardComputer.printBoard();
 		boardComputer.testHP();
 		boardComputer.reduceHitPoints(Board.DESTROYER);
+		boardComputer.printRadar();
 		boardComputer.testHP();
 	}
 }
