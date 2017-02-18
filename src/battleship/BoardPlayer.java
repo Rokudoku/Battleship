@@ -1,3 +1,4 @@
+package battleship;
 /*
  * The Board created by the player.
  * Ship positions are assigned by the player.

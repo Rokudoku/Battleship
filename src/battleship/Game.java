@@ -1,3 +1,4 @@
+package battleship;
 /*
  * The class that manages the flow of the game.
  * Creates objects using other classes and receives/uses player input.

@@ -1,3 +1,4 @@
+package battleship;
 /*
  * The Board created by the computer.
  * Randomly generates ship positions.

@@ -1,3 +1,4 @@
+package battleship;
 /*
  * The game board.
  * A superclass for BoardEnemy and BoardPlayer.
