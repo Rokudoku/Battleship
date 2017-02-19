@@ -1,10 +1,9 @@
 package battleship;
 /*
- * The game board.
- * A superclass for BoardEnemy and BoardPlayer.
+ * The game board. 
  * 
  * Boards also contain a radar which shows the HIT/MISS state of the board.
- * The player's radar is connected to the enemy board and vice-versa.
+ * The player uses the radar of the enemy board and vice-versa.
  */
 import java.util.Arrays;
 
@@ -29,14 +28,11 @@ public class Board {
 	public final static int HIT_CARRIER     = 5;
 	public final static int UNKNOWN			= 6;	// no shot fired yet
 	
-	// having only these directions help simplify finding a random spot
+	// having only these directions help simplify finding a valid placement
+	// pretty much same as vertical/horizontal but more specific with origin
 	public final static int RIGHT = 0;
 	public final static int DOWN  = 1;
 	public final static int NUM_DIRECTIONS = 2;
-	
-	// input error message
-	public final static String INPUT_ERROR_MESSAGE = "Coordinate must "
-			+ "contain: A-J followed by 1-10 (e.g. E3)";
 	
 	// protected so they can be a part of the subclasses
 	protected int[][] board = new int[BOARD_HEIGHT][BOARD_WIDTH];
@@ -73,7 +69,7 @@ public class Board {
 				&& column >= 0 && column < BOARD_WIDTH;
 	}
 	
-	// check if ship can be placed
+	// check if ship can be placed across the span of tiles
 	public boolean isValidPlacement(int rowStart, int columnStart,
 									int direction, int size) {
 		if (direction == RIGHT) {
@@ -92,7 +88,57 @@ public class Board {
 		return true;
 	}
 	
-	// returns the tile state
+	// randomly assign the ships to valid positions on the board
+	public void setRandomShips() {
+		// decrementing size order so that if collisions occur we check less spaces
+		for (int ship = CARRIER; ship >= PATROL_BOAT; ship--) {
+			setRandomPlacement(ship);
+		}
+	}
+	
+	private void setRandomPlacement(int ship) {
+		int size = getShipSize(ship);
+		int direction = (int) (Math.random() * NUM_DIRECTIONS);
+		int row;
+		int column;
+		
+		// look for a valid placement
+		do {
+			row = setRandomRow(direction, size);
+			column = setRandomColumn(direction, size);
+		} while (!isValidPlacement(row, column, direction, size));
+		
+		// place ships onto board
+		if (direction == RIGHT) {
+			for (int i = 0; i < size; i++) {
+				board[row][column+i] = ship;
+			}
+		} else {
+			for (int i = 0; i < size; i++) {
+				board[row+i][column] = ship;
+			}
+		}
+	}
+	
+	private int setRandomRow(int direction, int size) {
+		// eliminates option of selecting a row where ship would go off board
+		if (direction == RIGHT) {
+			return (int) (Math.random() * BOARD_HEIGHT);
+		} else {
+			return (int) (Math.random() * (BOARD_WIDTH - size + 1));
+		}
+	}
+	
+	private int setRandomColumn(int direction, int size) {
+		// eliminates option of selecting a column where ship would go off board
+		if (direction == RIGHT) {
+			return (int) (Math.random() * (BOARD_HEIGHT - size + 1));
+		} else {
+			return (int) (Math.random() * BOARD_WIDTH);
+		}
+	}
+	
+	// returns the tile state of the board
 	// ** NOTE THAT 0-5 OF TILE STATE LINE UP WITH 0-5 OF RADAR STATE **
 	// e.g. EMPTY == MISS, CARRIER == HIT_CARRIER
 	// exception is 6, UNKNOWN which only exists in the radar
@@ -161,6 +207,41 @@ public class Board {
 		default:
 			System.out.println("reduceHitPoints received invalid ship");
 			break;
+		}
+	}
+	
+	public void printBoard() {
+		System.out.println("  | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10|");
+		System.out.println("  -----------------------------------------");
+		
+		for (int row = 0; row < BOARD_HEIGHT; row++) {
+			System.out.print(this.getRowLetter(row) + " |");
+			for (int column = 0; column < BOARD_WIDTH; column++) {
+				switch(board[row][column]) {
+				case EMPTY:
+					System.out.print(" -  ");
+					break;
+				case PATROL_BOAT:
+					System.out.print(" P  ");
+					break;
+				case SUBMARINE:
+					System.out.print(" S  ");
+					break;
+				case DESTROYER:
+					System.out.print(" D  ");
+					break;
+				case BATTLESHIP:
+					System.out.print(" B  ");
+					break;
+				case CARRIER:
+					System.out.print(" C  ");
+					break;
+				default:
+					System.out.print(" ?  ");
+					break;
+				}
+			}
+			System.out.println("");
 		}
 	}
 	
