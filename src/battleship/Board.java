@@ -1,6 +1,7 @@
 package battleship;
 /*
- * The game board. 
+ * The game board. Deals with the state of the tiles on the board and the 
+ * states of the ships.
  * 
  * Boards also contain a radar which shows the HIT/MISS state of the board.
  * The player uses the radar of the enemy board and vice-versa.
@@ -8,10 +9,11 @@ package battleship;
 import java.util.Arrays;
 
 public class Board {
+	
 	public final static int BOARD_HEIGHT = 10;
 	public final static int BOARD_WIDTH  = 10;
 
-	// tile states
+	// tile states for board
 	public final static int EMPTY       = 0;
 	public final static int PATROL_BOAT = 1;	// 2 tiles
 	public final static int SUBMARINE   = 2;	// 3 tiles
@@ -34,9 +36,9 @@ public class Board {
 	public final static int DOWN  = 1;
 	public final static int NUM_DIRECTIONS = 2;
 	
-	// protected so they can be a part of the subclasses
-	protected int[][] board = new int[BOARD_HEIGHT][BOARD_WIDTH];
-	protected int[][] radar = new int[BOARD_HEIGHT][BOARD_WIDTH];
+	// the board and radar are represented as multidimensional arrays
+	private int[][] board = new int[BOARD_HEIGHT][BOARD_WIDTH];
+	private int[][] radar = new int[BOARD_HEIGHT][BOARD_WIDTH];
 	
 	private int patrolBoatHP = 2;
 	private int submarineHP  = 3;
@@ -45,21 +47,52 @@ public class Board {
 	private int carrierHP    = 5;
 	
 	public Board() {
-		// initialize entire board with EMPTY and radar with UNKNOWN
+		// Board objects are initialized with an empty board and a clear radar
 		for (int row = 0; row < BOARD_HEIGHT; row++) {
 			Arrays.fill(board[row], EMPTY);
 			Arrays.fill(radar[row], UNKNOWN);
 		}
+	}	
+	
+	// returns the tile state of the board tile
+	public int getBoardTile(int row, int column) {
+		if (isValidBoardTile(row, column)) {
+			return board[row][column];
+		} else {
+			System.out.println("Attempted to get tile state of invalid tile");
+			return 0;
+		}
 	}
 	
-	public String getRowLetter(int rowNumber) {
-		// used for printing out side of the board
-		String rowLetters[] = { "A", "B", "C", "D", "E",
-								"F", "G", "H", "I", "J" };
-		return rowLetters[rowNumber];
+	// sets the tile state of the board tile
+	public void setBoardTile(int row, int column, int state) {
+		if (isValidBoardTile(row, column)) {
+			board[row][column] = state;
+		} else {
+			System.out.println("Attempted to set tile state of invalid tile");
+		}
 	}
 	
-	public boolean isValidTile(int row, int column) {
+	// returns the tile state of the radar tile
+	public int getRadarTile(int row, int column) {
+		if (isValidBoardTile(row, column)) {
+			return board[row][column];
+		} else {
+			System.out.println("Attempted to get tile state of invalid tile");
+			return 0;
+		}
+	}
+	
+	// sets the tile state of the radar tile
+	public void setRadarTile(int row, int column, int state) {
+		if (isValidBoardTile(row, column)) {
+			radar[row][column] = state;
+		} else {
+			System.out.println("Attempted to set tile state of invalid tile");
+		}
+	}
+	
+	public boolean isValidBoardTile(int row, int column) {
 		// return false if it is already full
 		if (board[row][column] != EMPTY) {
 			return false;
@@ -70,17 +103,17 @@ public class Board {
 	}
 	
 	// check if ship can be placed across the span of tiles
-	public boolean isValidPlacement(int rowStart, int columnStart,
+	public boolean isValidShipPlacement(int rowStart, int columnStart,
 									int direction, int size) {
 		if (direction == RIGHT) {
 			for (int i = 0; i < size; i++) {
-				if (!isValidTile(rowStart, columnStart+i)) {
+				if (!isValidBoardTile(rowStart, columnStart+i)) {
 					return false;
 				}
 			}
 		} else {
 			for (int i = 0; i < size; i++) {
-				if (!isValidTile(rowStart+i, columnStart)) {
+				if (!isValidBoardTile(rowStart+i, columnStart)) {
 					return false;
 				}
 			}
@@ -106,7 +139,7 @@ public class Board {
 		do {
 			row = setRandomRow(direction, size);
 			column = setRandomColumn(direction, size);
-		} while (!isValidPlacement(row, column, direction, size));
+		} while (!isValidShipPlacement(row, column, direction, size));
 		
 		// place ships onto board
 		if (direction == RIGHT) {
@@ -138,18 +171,7 @@ public class Board {
 		}
 	}
 	
-	// returns the tile state of the board
-	// ** NOTE THAT 0-5 OF TILE STATE LINE UP WITH 0-5 OF RADAR STATE **
-	// e.g. EMPTY == MISS, CARRIER == HIT_CARRIER
-	// exception is 6, UNKNOWN which only exists in the radar
-	public int getTile(int row, int column) {
-		if (isValidTile(row, column)) {
-			return board[row][column];
-		} else {
-			System.out.println("Attempted to get tile state of invalid tile");
-			return 0;
-		}
-	}
+
 	
 	public int getShipSize(int ship) {
 		switch(ship) {
@@ -208,6 +230,13 @@ public class Board {
 			System.out.println("reduceHitPoints received invalid ship");
 			break;
 		}
+	}
+	
+	public String getRowLetter(int rowNumber) {
+		// used for printing out side of the board and for parsing user input
+		String rowLetters[] = { "A", "B", "C", "D", "E",
+								"F", "G", "H", "I", "J" };
+		return rowLetters[rowNumber];
 	}
 	
 	public void printBoard() {
