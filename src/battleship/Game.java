@@ -19,7 +19,9 @@ public class Game {
 	private final Board boardComputer = new Board();
 	
 	public Game() {		
-		boardComputer.setRandomShips();
+		boardComputer.setRandomShips();	// computer ships always random
+		boardComputer.printBoard(); // FOR DEBUGGING PURPOSES!!!
+		boardComputer.getBoardTile(1, 11);
 	}
 	
 	public void printRadars() {
@@ -34,7 +36,6 @@ public class Game {
 			System.out.println(INPUT_ERROR_MESSAGE);
 			userInput = scan.next();
 		}
-		
 		return userInput;
 	}
 	

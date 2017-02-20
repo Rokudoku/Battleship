@@ -56,40 +56,22 @@ public class Board {
 	
 	// returns the tile state of the board tile
 	public int getBoardTile(int row, int column) {
-		if (isValidBoardTile(row, column)) {
-			return board[row][column];
-		} else {
-			System.out.println("Attempted to get tile state of invalid tile");
-			return 0;
-		}
+		return board[row][column];
 	}
 	
 	// sets the tile state of the board tile
 	public void setBoardTile(int row, int column, int state) {
-		if (isValidBoardTile(row, column)) {
-			board[row][column] = state;
-		} else {
-			System.out.println("Attempted to set tile state of invalid tile");
-		}
+		board[row][column] = state;
 	}
 	
 	// returns the tile state of the radar tile
 	public int getRadarTile(int row, int column) {
-		if (isValidBoardTile(row, column)) {
-			return board[row][column];
-		} else {
-			System.out.println("Attempted to get tile state of invalid tile");
-			return 0;
-		}
+		return board[row][column];
 	}
 	
 	// sets the tile state of the radar tile
 	public void setRadarTile(int row, int column, int state) {
-		if (isValidBoardTile(row, column)) {
-			radar[row][column] = state;
-		} else {
-			System.out.println("Attempted to set tile state of invalid tile");
-		}
+		radar[row][column] = state;
 	}
 	
 	public boolean isValidBoardTile(int row, int column) {
@@ -103,7 +85,7 @@ public class Board {
 	}
 	
 	// check if ship can be placed across the span of tiles
-	public boolean isValidShipPlacement(int rowStart, int columnStart,
+	private boolean isValidShipPlacement(int rowStart, int columnStart,
 									int direction, int size) {
 		if (direction == RIGHT) {
 			for (int i = 0; i < size; i++) {
