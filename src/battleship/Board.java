@@ -57,6 +57,11 @@ public class Board {
 	// returns the tile state of the board tile
 	public int getBoardTile(int row, int column) {
 		return board[row][column];
+	}	
+	
+	// returns the tile state of the radar tile
+	public int getRadarTile(int row, int column) {
+		return radar[row][column];
 	}
 	
 	// sets the tile state of the board tile
@@ -64,17 +69,12 @@ public class Board {
 		board[row][column] = state;
 	}
 	
-	// returns the tile state of the radar tile
-	public int getRadarTile(int row, int column) {
-		return board[row][column];
-	}
-	
 	// sets the tile state of the radar tile
 	public void setRadarTile(int row, int column, int state) {
 		radar[row][column] = state;
 	}
 	
-	public boolean isValidBoardTile(int row, int column) {
+	private boolean isValidBoardTile(int row, int column) {
 		// return false if it is already full
 		if (board[row][column] != EMPTY) {
 			return false;
