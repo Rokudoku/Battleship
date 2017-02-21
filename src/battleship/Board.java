@@ -153,8 +153,6 @@ public class Board {
 		}
 	}
 	
-
-	
 	public int getShipSize(int ship) {
 		switch(ship) {
 		case PATROL_BOAT:

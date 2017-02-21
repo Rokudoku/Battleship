@@ -21,7 +21,6 @@ public class Game {
 	public Game() {		
 		boardComputer.setRandomShips();	// computer ships always random
 		boardComputer.printBoard(); // FOR DEBUGGING PURPOSES!!!
-		boardComputer.getBoardTile(7, 11);
 	}
 	
 	public void printRadars() {
