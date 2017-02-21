@@ -1,8 +1,10 @@
-package battleship;
+package battleship.tests;
 
 import static org.junit.Assert.*;
 
 import org.junit.Test;
+
+import battleship.Board;
 
 public class BoardTestSetGet {
 
