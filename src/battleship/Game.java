@@ -26,11 +26,12 @@ public class Game {
 	
 	public Game() {		
 		boardEnemy.setRandomShips();	// computer ships always random
+		System.out.println("===========================================");
 		boardEnemy.printBoard(); // FOR DEBUGGING PURPOSES!!!
-	}
-	
-	public void printRadars() {
+		System.out.println("===========================================");
 		boardEnemy.printRadar();
+		boardEnemy.printHealth();
+		System.out.println("===========================================");
 	}
 	
 	public void doPlayerTurn() {
@@ -53,8 +54,10 @@ public class Game {
 		// announce the hit/miss
 		makeAnnouncement(state);
 		
-		// show the radar
+		// show the radar/health
+		System.out.println("===========================================");
 		boardEnemy.printRadar();
+		boardEnemy.printHealth();
 	}
 	
 	private String getPlayerInput() {

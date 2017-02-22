@@ -245,6 +245,7 @@ public class Board {
 			}
 			System.out.println("");
 		}
+		System.out.println("  -----------------------------------------");
 	}
 	
 	public void printRadar() {
@@ -283,6 +284,7 @@ public class Board {
 			}
 			System.out.println("");
 		}
+		System.out.println("  -----------------------------------------");
 	}
 	
 	// for printing out the left side of the board/radar
@@ -290,5 +292,18 @@ public class Board {
 		String rowLetters[] = { "A", "B", "C", "D", "E",
 								"F", "G", "H", "I", "J" };
 		return rowLetters[rowNumber];
+	}
+	
+	//
+	// |-------|-------|-------|-------|-------|
+	// | P = 2 | S = 3 | D = 3 | B = 4 | C = 5 |
+	// |-------|-------|-------|-------|-------|
+	//
+	public void printHealth() {
+		//System.out.println("  |-------|-------|-------|-------|-------|");
+		System.out.println("  | P = " + patrolBoatHP + " | S = " + 
+				submarineHP + " | D = " + destroyerHP + " | B = " + 
+				battleshipHP + " | C = " + carrierHP + " |");		
+		System.out.println("  -----------------------------------------");		
 	}
 }
