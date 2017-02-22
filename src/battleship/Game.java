@@ -44,8 +44,16 @@ public class Game {
 		// "10" needs to be accounted for, so ending substring will be converted
 		int column = convertNumberToColumn(userInput.substring(1));
 		
-		System.out.println("Row: " + row);
-		System.out.println("Column: " + column);
+		// change the state of the ENEMY radar (linked to enemy board)
+		// this would be equal to the state of the board as I made the constants line up
+		// e.g. EMPTY(board) == MISS(radar), BATTLESHIP(board) = HIT_BATTLESHIP(radar)
+		int state = boardEnemy.getBoardTile(row, column);
+		boardEnemy.setRadarTile(row, column, state);
+		
+		// announce the hit/miss
+		
+		
+		// show the radar
 	}
 	
 	private String getPlayerInput() {

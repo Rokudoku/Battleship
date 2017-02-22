@@ -7,5 +7,6 @@ public class RunGame {
 		Game g = new Game();
 		g.printRadars();
 		g.doPlayerTurn();
+		g.printRadars();
 	}
 }
