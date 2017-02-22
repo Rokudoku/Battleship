@@ -212,13 +212,6 @@ public class Board {
 		}
 	}
 	
-	public String getRowLetter(int rowNumber) {
-		// used for printing out side of the board and for parsing user input
-		String rowLetters[] = { "A", "B", "C", "D", "E",
-								"F", "G", "H", "I", "J" };
-		return rowLetters[rowNumber];
-	}
-	
 	public void printBoard() {
 		System.out.println("  | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10|");
 		System.out.println("  -----------------------------------------");
@@ -290,5 +283,12 @@ public class Board {
 			}
 			System.out.println("");
 		}
+	}
+	
+	// for printing out the left side of the board/radar
+	private String getRowLetter(int rowNumber) {
+		String rowLetters[] = { "A", "B", "C", "D", "E",
+								"F", "G", "H", "I", "J" };
+		return rowLetters[rowNumber];
 	}
 }
