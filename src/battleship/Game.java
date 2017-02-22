@@ -51,9 +51,10 @@ public class Game {
 		boardEnemy.setRadarTile(row, column, state);
 		
 		// announce the hit/miss
-		
+		makeAnnouncement(state);
 		
 		// show the radar
+		boardEnemy.printRadar();
 	}
 	
 	private String getPlayerInput() {
@@ -77,58 +78,84 @@ public class Game {
 	}
 	
 	private static int convertLetterToRow(char letter) {
-			switch (letter) {
-			case 'A':
-				return 0;
-			case 'B':
-				return 1;
-			case 'C':
-				return 2;
-			case 'D':
-				return 3;
-			case 'E':
-				return 4;
-			case 'F':
-				return 5;
-			case 'G':
-				return 6;
-			case 'H':
-				return 7;
-			case 'I':
-				return 8;
-			case 'J':
-				return 9;
-			default:
-				System.out.println("Error: could not convert letter to row.");
-				return -1;
-			}
+		switch (letter) {
+		case 'A':
+			return 0;
+		case 'B':
+			return 1;
+		case 'C':
+			return 2;
+		case 'D':
+			return 3;
+		case 'E':
+			return 4;
+		case 'F':
+			return 5;
+		case 'G':
+			return 6;
+		case 'H':
+			return 7;
+		case 'I':
+			return 8;
+		case 'J':
+			return 9;
+		default:
+			System.out.println("Error: could not convert letter to row.");
+			return -1;
 		}
+	}
 		
-		private static int convertNumberToColumn(String letter) {
-			switch (letter) {
-			case "1":
-				return 0;
-			case "2":
-				return 1;
-			case "3":
-				return 2;
-			case "4":
-				return 3;
-			case "5":
-				return 4;
-			case "6":
-				return 5;
-			case "7":
-				return 6;
-			case "8":
-				return 7;
-			case "9":
-				return 8;
-			case "10":
-				return 9;
-			default:
-				System.out.println("Error: could not convert number to column.");
-				return -1;
-			}
+	private static int convertNumberToColumn(String letter) {
+		switch (letter) {
+		case "1":
+			return 0;
+		case "2":
+			return 1;
+		case "3":
+			return 2;
+		case "4":
+			return 3;
+		case "5":
+			return 4;
+		case "6":
+			return 5;
+		case "7":
+			return 6;
+		case "8":
+			return 7;
+		case "9":
+			return 8;
+		case "10":
+			return 9;
+		default:
+			System.out.println("Error: could not convert number to column.");
+			return -1;
+		}
+	}
+	
+	private void makeAnnouncement(int state) {
+		switch (state) {
+		case Board.MISS:
+			System.out.println("Miss.");
+			break;
+		case Board.HIT_PATROL_BOAT:
+			System.out.println("Hit. Patrol boat(2).");
+			break;
+		case Board.HIT_SUBMARINE:
+			System.out.println("Hit. Submarine(3).");
+			break;
+		case Board.HIT_DESTROYER:
+			System.out.println("Hit. Destroyer(3).");
+			break;
+		case Board.HIT_BATTLESHIP:
+			System.out.println("Hit. Battleship(4).");
+			break;
+		case Board.HIT_CARRIER:
+			System.out.println("Hit. Carrier(5).");
+			break;
+		default:
+			System.out.println("Error: Unknown tile shot");
+			break;
+		}
 	}
 }
