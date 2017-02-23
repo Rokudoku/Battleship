@@ -45,6 +45,7 @@ public class Board {
 	private int destroyerHP  = 3;
 	private int battleshipHP = 4;
 	private int carrierHP    = 5;
+	private int totalHP 	 = 17;	// game over check
 	
 	public Board() {
 		// Board objects are initialized with an empty board and a clear radar
@@ -171,22 +172,8 @@ public class Board {
 		}
 	}
 	
-	public int getHitPoints(int ship) {
-		switch(ship) {
-		case PATROL_BOAT:
-			return patrolBoatHP;
-		case SUBMARINE:
-			return submarineHP;
-		case DESTROYER:
-			return destroyerHP;
-		case BATTLESHIP:
-			return battleshipHP;
-		case CARRIER:
-			return carrierHP;
-		default:
-			System.out.println("getHitPoints received invalid ship");
-			return EMPTY;
-		}
+	public int getHitPoints() {
+		return totalHP;
 	}
 	
 	public void reduceHitPoints(int ship) {
@@ -207,9 +194,10 @@ public class Board {
 			carrierHP -= 1;
 			break;
 		default:
-			System.out.println("reduceHitPoints received invalid ship");
+			System.out.println("Error: tried reducing HP of invalid ship.");
 			break;
 		}
+		totalHP -= 1;
 	}
 	
 	public void printBoard() {
@@ -294,11 +282,6 @@ public class Board {
 		return rowLetters[rowNumber];
 	}
 	
-	//
-	// |-------|-------|-------|-------|-------|
-	// | P = 2 | S = 3 | D = 3 | B = 4 | C = 5 |
-	// |-------|-------|-------|-------|-------|
-	//
 	public void printHealth() {
 		//System.out.println("  |-------|-------|-------|-------|-------|");
 		System.out.println("  | P = " + patrolBoatHP + " | S = " + 

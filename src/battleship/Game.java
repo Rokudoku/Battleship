@@ -22,19 +22,33 @@ public class Game {
 	private LinkedList<String> shotTilesEnemy = new LinkedList<String>();
 	private LinkedList<String> shotTilesPlayer = new LinkedList<String>();
 	
+	private int turns = 1;
+	
 	private final Board boardEnemy = new Board();
 	
 	public Game() {		
 		boardEnemy.setRandomShips();	// computer ships always random
-		System.out.println("===========================================");
-		boardEnemy.printBoard(); // FOR DEBUGGING PURPOSES!!!
-		System.out.println("===========================================");
-		boardEnemy.printRadar();
-		boardEnemy.printHealth();
-		System.out.println("===========================================");
+		//System.out.println("===========================================");
+		//boardEnemy.printBoard(); // FOR DEBUGGING PURPOSES!!!
+		//System.out.println("===========================================");
+		//boardEnemy.printRadar();
+		//boardEnemy.printHealth();
+		//System.out.println("===========================================");
 	}
 	
-	public void doPlayerTurn() {
+	public int getEnemyHitPoints() {
+		return boardEnemy.getHitPoints();
+	}
+	
+	public int getTurns() {
+		return turns;
+	}
+	
+	public void doPlayerTurn() {		
+		// show the radar/health
+		boardEnemy.printRadar();
+		boardEnemy.printHealth();
+		
 		// get the user input string (e.g. E3)
 		System.out.println("Enter coordinate to fire at:");
 		String userInput = getPlayerInput();
@@ -54,10 +68,13 @@ public class Game {
 		// announce the hit/miss
 		makeAnnouncement(state);
 		
-		// show the radar/health
-		System.out.println("===========================================");
-		boardEnemy.printRadar();
-		boardEnemy.printHealth();
+		// if hit, reduce the HP
+		if (state >= boardEnemy.PATROL_BOAT && state <= boardEnemy.CARRIER) {
+			boardEnemy.reduceHitPoints(state);
+		}
+		
+		// increment turns
+		turns += 1;
 	}
 	
 	private String getPlayerInput() {
@@ -142,19 +159,19 @@ public class Game {
 			System.out.println("Miss.");
 			break;
 		case Board.HIT_PATROL_BOAT:
-			System.out.println("Hit. Patrol boat(2).");
+			System.out.println("Hit. Patrol boat.");
 			break;
 		case Board.HIT_SUBMARINE:
-			System.out.println("Hit. Submarine(3).");
+			System.out.println("Hit. Submarine.");
 			break;
 		case Board.HIT_DESTROYER:
-			System.out.println("Hit. Destroyer(3).");
+			System.out.println("Hit. Destroyer.");
 			break;
 		case Board.HIT_BATTLESHIP:
-			System.out.println("Hit. Battleship(4).");
+			System.out.println("Hit. Battleship.");
 			break;
 		case Board.HIT_CARRIER:
-			System.out.println("Hit. Carrier(5).");
+			System.out.println("Hit. Carrier.");
 			break;
 		default:
 			System.out.println("Error: Unknown tile shot");
