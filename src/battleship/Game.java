@@ -3,8 +3,7 @@ package battleship;
  * The class that sets up a new game.
  * The computer's board is always created and assigned random ship positions.
  * 
- * The class that manages the flow of the game.
- * Creates objects using other classes and receives/uses player input.
+ * Contains the methods that are part of the game itself to be used by RunGame.
  */
 import java.util.Scanner;
 import java.util.LinkedList;
@@ -19,29 +18,23 @@ public class Game {
 	
 	// the tiles the player/enemy have already shot at
 	// contains the tile coordinates in the for of <A-J><1-10> (e.g. E3)
-	private LinkedList<String> shotTilesEnemy = new LinkedList<String>();
 	private LinkedList<String> shotTilesPlayer = new LinkedList<String>();
 	
-	private int turns = 1;
+	private int turn = 1;
 	
 	private final Board boardEnemy = new Board();
 	
 	public Game() {		
 		boardEnemy.setRandomShips();	// computer ships always random
-		//System.out.println("===========================================");
-		//boardEnemy.printBoard(); // FOR DEBUGGING PURPOSES!!!
-		//System.out.println("===========================================");
-		//boardEnemy.printRadar();
-		//boardEnemy.printHealth();
-		//System.out.println("===========================================");
 	}
 	
+	// total hit-points of all the remaining ship HP
 	public int getEnemyHitPoints() {
 		return boardEnemy.getHitPoints();
 	}
 	
-	public int getTurns() {
-		return turns;
+	public int getTurn() {
+		return turn;
 	}
 	
 	public void doPlayerTurn() {		
@@ -74,7 +67,7 @@ public class Game {
 		}
 		
 		// increment turns
-		turns += 1;
+		turn += 1;
 	}
 	
 	private String getPlayerInput() {
