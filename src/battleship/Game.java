@@ -74,8 +74,12 @@ public class Game {
 		String userInput = scan.next();
 		
 		// keep asking until input is valid
-		while (!isValidInput(userInput)) {
-			System.out.println(INPUT_ERROR_MESSAGE);
+		while (!isValidInput(userInput) || checkAlreadyShotPlayer(userInput)) {
+			if (!isValidInput(userInput)) {
+				System.out.println(INPUT_ERROR_MESSAGE);
+			} else {
+				System.out.println("You already shot that one! Try again.");
+			}
 			userInput = scan.next();
 		}
 		
@@ -84,6 +88,12 @@ public class Game {
 		
 		shotTilesPlayer.add(userInput);		// add to the shotTiles list
 		return userInput;
+	}
+	
+	private boolean checkAlreadyShotPlayer(String userInput) {
+		userInput = userInput.substring(0, 1).toUpperCase() 
+				+ userInput.substring(1);	// capitalize first letter
+		return shotTilesPlayer.contains(userInput);
 	}
 	
 	private static boolean isValidInput(String input) {
